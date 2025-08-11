@@ -58,7 +58,7 @@ def modo_balcao():
                 continue
 
             # Pra facilitar coloquei aqui apenas o cpf-nome do cliente
-            Pedido.cadastrar_pedido(cliente.cpf + '-' + cliente.nome, produto, qtd)
+            Pedido.cadastrar_pedido(cliente.cpf + '-' + cliente.nome, produto, qtd, 'pendente')
 
             sucesso('Pedido cadastrado com sucesso.')
         else:

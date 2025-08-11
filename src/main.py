@@ -3,6 +3,7 @@
 
 # Import print functions
 from modos.balcao import modo_balcao
+from modos.cozinha import modo_cozinha
 from modos.gestao import modo_gestao
 from utils.print import limpar_tela, sucesso, aviso, padrao, erro, pergunta, espaco
 
@@ -45,7 +46,7 @@ while True:
     elif escolha == 1:
         modo_balcao()
     elif escolha == 2:
-        print('Você escolheu a Opção 2.')
+        modo_cozinha()
     elif escolha == 3:
         modo_gestao()
     else:

@@ -13,10 +13,11 @@ ARQUIVO_PEDIDOS = os.path.join(RAIZ_PROJETO, 'dados', 'pedidos.json')
 # Classe para tratar dos pedidos
 class Pedido:
     # Para usar os campos como proriedade (pedido.produto)
-    def __init__(self, cliente, produto, qtd):
+    def __init__(self, cliente, produto, qtd, status):
         self.cliente = cliente
         self.produto = produto
         self.qtd = qtd
+        self.status = status
 
     @classmethod
     def listar_todos_pedidos(cls):
@@ -32,7 +33,7 @@ class Pedido:
             with open(ARQUIVO_PEDIDOS, 'r') as arquivo:
                 dados = json.load(arquivo)
                 # Pesquisei aqui tb pra conseguir gerar o retorno como queria
-                return [Pedido(d['cliente'], d['produto'], d['qtd']) for d in dados]
+                return [Pedido(d['cliente'], d['produto'], d['qtd'], d['status']) for d in dados]
         except json.JSONDecodeError as e:
             erro('Erro ao abrir arquivo: ' + ARQUIVO_PEDIDOS)
             erro(f'Erro: {e}')
@@ -41,11 +42,11 @@ class Pedido:
     # Prof.... simplifiquei ao máximo aqui ... desculpe se não ficou a contento!
     # de fato fiz de última hora.
     @classmethod
-    def cadastrar_pedido(cls, cliente, produto, qtd):
+    def cadastrar_pedido(cls, cliente, produto, qtd, status):
         # Como não temos banco de dados, precisamos carregar tudo em memória
         # Isso não aconteceria em um sistema padrão... 
         pedidos = cls.listar_todos_pedidos()
-        novo_pedido = Pedido(cliente, produto, qtd)
+        novo_pedido = Pedido(cliente, produto, qtd, status)
         pedidos.append(novo_pedido)
 
         # Depois de carregar e adicionar, salva arquivo do zero... 'w'
