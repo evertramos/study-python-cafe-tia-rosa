@@ -1,4 +1,4 @@
-# Writen by Evert Ramos
+# Writen by Evert Ramos > copieie de clientes
 import os
 import json
 
@@ -19,7 +19,7 @@ class Produto:
         self.preco = preco
 
     @classmethod
-    def listar_todos_produtos(cls):
+    def listar_todos_produtos(cls, retornar_dict=False):
 
         # Se não achar o arquivo cria um vazio
         if not os.path.exists(ARQUIVO_PRODUTOS):
@@ -31,6 +31,8 @@ class Produto:
         try:
             with open(ARQUIVO_PRODUTOS, 'r') as arquivo:
                 dados = json.load(arquivo)
+                if retornar_dict:
+                    return dados
                 # copiei de Clientes...
                 return [Produto(id, d['nome'], d['preco']) for id, d in dados.items()]
         except json.JSONDecodeError:
@@ -55,7 +57,7 @@ class Produto:
 
         # Como não temos banco de dados, precisamos carregar tudo em memória
         # Isso não aconteceria em um sistema padrão... 
-        produtos = cls.listar_todos_produtos()
+        produtos = cls.listar_todos_produtos(True)
 
         if id in produtos:
             erro('Produto já cadastrado.')

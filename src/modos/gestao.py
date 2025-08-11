@@ -22,6 +22,7 @@ def modo_gestao():
         print()
         padrao('3. Listar Clientes')
         padrao('4. Listar Produtos')
+        print()
         padrao('0. Voltar ao menu principal')
         print()
         padrao('00. Sair do sistema')

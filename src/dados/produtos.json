@@ -2,5 +2,9 @@
   "1": {
     "nome": "Café Expresso",
     "preco": 18.5
+  },
+  "2": {
+    "nome": "Café Coado",
+    "preco": 12.0
   }
 }

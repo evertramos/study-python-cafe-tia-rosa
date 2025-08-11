@@ -20,8 +20,7 @@ class Cliente:
         self.telefone = telefone
 
     @classmethod
-    def listar_todos_clientes(cls):
-
+    def listar_todos_clientes(cls, retornar_dict=False):
         # Se não achar o arquivo cria um vazio
         if not os.path.exists(ARQUIVO_CLIENTES):
             arquivo = open(ARQUIVO_CLIENTES, 'w')
@@ -31,6 +30,8 @@ class Cliente:
 
         try:
             with open(ARQUIVO_CLIENTES, 'r') as arquivo:
+                if retornar_dict:
+                    return json.load(arquivo)
                 dados = json.load(arquivo)
                 # Pesquisei aqui tb pra conseguir gerar o retorno como queria 
                 return [Cliente(d['nome'], cpf, d.get('telefone')) for cpf, d in dados.items()]
@@ -41,7 +42,7 @@ class Cliente:
     # Buscar Cliente pelo cpf (key)
     @classmethod
     def buscar_cliente(cls, cpf):
-        todos_clientes = cls.listar_todos_clientes()
+        todos_clientes = cls.listar_todos_clientes(True)
         # verificar cpf nas chaves do json 
         if cpf in todos_clientes:
             cliente = todos_clientes[cpf]
@@ -55,7 +56,7 @@ class Cliente:
         
         # Como não temos banco de dados, precisamos carregar tudo em memória
         # Isso não aconteceria em um sistema padrão... 
-        clientes = cls.listar_todos_clientes()
+        clientes = cls.listar_todos_clientes(True)
 
         if cpf in clientes:
             erro('Cliente já cadastrado.')

@@ -1,4 +1,4 @@
-# Writen by Evert Ramos
+# Writen by Evert Ramos > copieie de clientes
 import os
 import json
 
@@ -12,12 +12,11 @@ ARQUIVO_PEDIDOS = os.path.join(RAIZ_PROJETO, 'dados', 'pedidos.json')
 
 # Classe para tratar dos pedidos
 class Pedido:
-    # Para usar os camps como proriedade (pedido.produto)
-    def __init__(self, nome, cpf, telefone=None):
-        self.nome = nome
-        self.cpf = cpf
-        self.telefone = telefone
-
+    # Para usar os campos como proriedade (pedido.produto)
+    def __init__(self, cliente, produto, qtd):
+        self.cliente = cliente
+        self.produto = produto
+        self.qtd = qtd
 
     @classmethod
     def listar_todos_pedidos(cls):
@@ -25,53 +24,43 @@ class Pedido:
         # Se não achar o arquivo cria um vazio
         if not os.path.exists(ARQUIVO_PEDIDOS):
             arquivo = open(ARQUIVO_PEDIDOS, 'w')
-            # adicionar '{}' no arquivo:
-            json.dump({}, arquivo)
+            # adicionar '[]' no arquivo:
+            json.dump([], arquivo)
             arquivo.close()
 
         try:
             with open(ARQUIVO_PEDIDOS, 'r') as arquivo:
-                return json.load(arquivo)
-        except json.JSONDecodeError:
+                dados = json.load(arquivo)
+                # Pesquisei aqui tb pra conseguir gerar o retorno como queria
+                return [Pedido(d['cliente'], d['produto'], d['qtd']) for d in dados]
+        except json.JSONDecodeError as e:
             erro('Erro ao abrir arquivo: ' + ARQUIVO_PEDIDOS)
-            return {}
+            erro(f'Erro: {e}')
+            return []
 
-    # Buscar Cliente pelo cpf (key)
+    # Prof.... simplifiquei ao máximo aqui ... desculpe se não ficou a contento!
+    # de fato fiz de última hora.
     @classmethod
-    def buscar_cliente(cls, cpf):
-        todos_pedidos = cls.listar_todos_pedidos()
-        # verificar cpf nas chaves do json 
-        if cpf in todos_pedidos:
-            cliente = todos_pedidos[cpf]
-            return Cliente(cliente['nome'], cliente['cpf'], cliente['telefone'])
-        return None
-    
-
-    # Para simplificar o sistema vamos considerar que todos os pedidos possuem CPF
-    @classmethod
-    def cadastrar_cliente(cls, nome, cpf, telefone=None):
-        
+    def cadastrar_pedido(cls, cliente, produto, qtd):
         # Como não temos banco de dados, precisamos carregar tudo em memória
         # Isso não aconteceria em um sistema padrão... 
         pedidos = cls.listar_todos_pedidos()
-
-        if cpf in pedidos:
-            erro('Cliente já cadastrado.')
-            return False
-
-        novo_cliente = {
-            'nome': nome,
-            'cpf': cpf,
-            'telefone': telefone
-        }
-
-        pedidos[cpf] = novo_cliente
+        novo_pedido = Pedido(cliente, produto, qtd)
+        pedidos.append(novo_pedido)
 
         # Depois de carregar e adicionar, salva arquivo do zero... 'w'
         with open(ARQUIVO_PEDIDOS, 'w') as arquivo:
-            # Pesquisei aqui pra ficar identado pra facilitar a leitura prof.
-            json.dump(pedidos, arquivo, indent=2, ensure_ascii=False)
+            # Aqui usando esse __dict__ funcionou... 
+            json.dump([pedido.__dict__ for pedido in pedidos], arquivo, indent=2, ensure_ascii=False)
 
-        sucesso('Cliente cadastrado com sucesso.')
         return True
 
+
+    # @TODO:
+    # - cancelar pedido
+    # - id por pedido
+    # - buscar pedido
+    # - total to pedido
+    # - somar pedidos
+    # - criar data de pedido
+    # - etc... (faltou muita coisa... )

@@ -1,0 +1,22 @@
+[
+  {
+    "cliente": "111-Teste2",
+    "produto": "1",
+    "qtd": 1
+  },
+  {
+    "cliente": "111-Teste2",
+    "produto": "1",
+    "qtd": 1
+  },
+  {
+    "cliente": "999-Teste1",
+    "produto": "1",
+    "qtd": 2
+  },
+  {
+    "cliente": "888-Jose",
+    "produto": "2",
+    "qtd": 1
+  }
+]
