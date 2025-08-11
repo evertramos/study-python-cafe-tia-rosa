@@ -27,7 +27,7 @@ while True:
     padrao('Modos de operações do sistema:')
     padrao('1. [BALCÃO]\t- Atendimento de Clientes')
     padrao('2. [COZINHA]\t- Lista de Pedidos')
-    padrao('3. [GESTÃO]\t- CadastroS')
+    padrao('3. [GESTÃO]\t- Cadastros')
     padrao('0. Sair')
     print()
     padrao('00. Para sair em qualquer tela!')

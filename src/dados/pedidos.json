@@ -10,5 +10,11 @@
     "produto": "1",
     "qtd": 1,
     "status": "pendente"
+  },
+  {
+    "cliente": "777-Fred",
+    "produto": "1",
+    "qtd": 1,
+    "status": "pendente"
   }
 ]
