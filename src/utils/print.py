@@ -1,3 +1,5 @@
+import os
+
 # Separamos aqui para melhor organização do código
 
 def printc(text, color_code):
@@ -15,6 +17,13 @@ def aviso(text):
 def padrao(text):
     printc(text, '33')  # Amarelo padrão
 
+# Espaçamento
+def espaco():
+    sucesso('#------------------------------------------------------------------------------#')
+
+# Limpar a tela
+def limpar_tela():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 # Função de input colorido
 def inputc(text, color_code):
